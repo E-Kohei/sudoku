@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from sudoku3 import sudoku
+from sudoku_solver import sudoku
 
 
 def sigmoid(t):
