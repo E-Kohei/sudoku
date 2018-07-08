@@ -27,42 +27,6 @@ def feed_forward(neural_network, inputs):
         outputs.append(output)
         inputs = output
     return outputs
-        
-def back_propagate(network, input_vector, targets, ite=10000):
-    hidden_outputs, outputs = feed_forward(network, input_vector)
-
-    output_deltas = outputs * (1 - outputs) * (outputs - targets)
-
-    row = network[-1].shape[0]
-    new_output_layer = network[-1] - \
-                       output_deltas.reshape((row,1)) * add_bias(hidden_outputs)
-
-    hidden_deltas = hidden_outputs * (1 - hidden_outputs) * \
-                    output_deltas.dot(new_output_layer[:,:-1])
-
-    row2 = network[0].shape[0]
-    new_hidden_layer = network[0] - \
-                       hidden_deltas.reshape((row2,1)) * add_bias(input_vector)
-    network = [new_hidden_layer, new_output_layer]
-    return network
-
-def back_propagate2(network, input_matrix, targets):
-    hidden_outputs, outputs = feed_forward(network, input_matrix)
-
-    output_deltas = outputs * (1 - outputs) * (outputs - targets)
-
-    row = network[-1].shape[0]
-    new_output_layer = network[-1] - \
-                       output_deltas.reshape((row,1)) * add_bias(hidden_outputs)
-
-    hidden_deltas = hidden_outputs * (1 - hidden_outputs) * \
-                    output_deltas.dot(new_output_layer[:,:-1])
-
-    row2 = network[0].shape[0]
-    new_hidden_layer = network[0] - \
-                       np.tensordot(hidden_deltas, add_bias(input_matrix), axes=0)
-    network = [new_hidden_layer, new_output_layer]
-    return network
 
 def coord_of_img(i,j,img):
     v = 30*i + 3*(i+1)
